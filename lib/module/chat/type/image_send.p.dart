@@ -6,6 +6,8 @@ class ImageSend extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final model = context.watch<_ChatModel>();
+
     return Padding(
       padding: const EdgeInsets.only(left: 18, right: 20),
       child: () {
@@ -13,17 +15,25 @@ class ImageSend extends StatelessWidget {
           case 0:
             return const SizedBox();
           case 1:
-            return buildSingleImage();
+            return buildSingleImage(
+              onPressed: () => model.onPhotoItemPressed(images),
+            );
           case 2:
-            return buildDoubleImage();
+            return buildDoubleImage(
+              onPressed: (i) => model.onPhotoItemPressed(images, index: i),
+            );
           default:
-            return buildGridImage();
+            return buildGridImage(
+              onPressed: (i) => model.onPhotoItemPressed(images, index: i),
+            );
         }
       }(),
     );
   }
 
-  Widget buildGridImage() {
+  Widget buildGridImage({
+    ValueChanged<int>? onPressed,
+  }) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
@@ -47,6 +57,7 @@ class ImageSend extends StatelessWidget {
             itemBuilder: (_, i) {
               return ImageWidget(
                 imageUrl: images[i],
+                onPressed: () => onPressed?.call(i),
               );
             },
           ),
@@ -55,7 +66,7 @@ class ImageSend extends StatelessWidget {
     );
   }
 
-  Widget buildDoubleImage() {
+  Widget buildDoubleImage({ValueChanged<int>? onPressed}) {
     return Row(
       children: [
         Expanded(
@@ -74,6 +85,7 @@ class ImageSend extends StatelessWidget {
                   child: ImageWidget(
                     imageUrl: images[0],
                     height: 130,
+                    onPressed: () => onPressed?.call(0),
                   ),
                 ),
                 const SizedBox(width: 5),
@@ -81,6 +93,7 @@ class ImageSend extends StatelessWidget {
                   child: ImageWidget(
                     imageUrl: images[1],
                     height: 130,
+                    onPressed: () => onPressed?.call(1),
                   ),
                 ),
               ],
@@ -91,7 +104,7 @@ class ImageSend extends StatelessWidget {
     );
   }
 
-  Widget buildSingleImage() {
+  Widget buildSingleImage({VoidCallback? onPressed}) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
@@ -103,6 +116,7 @@ class ImageSend extends StatelessWidget {
         const SizedBox(width: 6),
         Flexible(
           child: ImageWidget(
+            onPressed: onPressed,
             imageUrl: images.first,
           ),
         ),
