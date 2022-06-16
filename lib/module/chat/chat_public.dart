@@ -13,6 +13,7 @@ part 'type/messeger_receive.p.dart';
 part 'type/image_receive.p.dart';
 part 'widget/image_widget.p.dart';
 part 'widget/send_time.p.dart';
+part 'type/image_send.p.dart';
 
 ChangeNotifierProvider<_ChatModel> createChat() {
   return ChangeNotifierProvider<_ChatModel>(

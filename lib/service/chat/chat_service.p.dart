@@ -64,7 +64,6 @@ class ChatService extends ChangeNotifier {
       messages.add(textLs[i]);
       messages.add(imageLs[i]);
     }
-    print(messages);
     notifyListeners();
   }
 }
