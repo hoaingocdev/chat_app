@@ -41,10 +41,10 @@ class ChatService extends ChangeNotifier {
     networkState.value = NetworkState.done;
   }
 
-  Future sendImg(String path) async {
+  Future sendImg(List<String> images) async {
     try {
       networkState.value = NetworkState.idle;
-      await _sendImg(path);
+      await _sendImg(images);
 
       networkState.value = NetworkState.typing;
       await Future.delayed(const Duration(seconds: 1));
@@ -56,12 +56,17 @@ class ChatService extends ChangeNotifier {
     }
   }
 
-  Future _sendImg(String path) async {
+  Future _sendImg(List<String> images) async {
     final msg = MessageInfo(
       date: DateTime.now(),
-      imagePath: path,
       status: MessageStatus.send,
       type: MessageType.image,
+      images: List.generate(10, (index) {
+        return ImageUtils.random(
+          width: 100.0 * Random.secure().nextInt(10),
+          height: 1080 * Random.secure().nextDouble(),
+        );
+      }),
     );
     messages.add(msg);
     return notifyListeners();
