@@ -1,7 +1,7 @@
 part of chat_list;
 
 class _ChatListModel extends TTChangeNotifier<_ChatListView> {
-  final chats = <UseInfo>[];
+  final chats = <UserInfo>[];
 
   _ChatListModel() {
     _initData();
@@ -9,7 +9,7 @@ class _ChatListModel extends TTChangeNotifier<_ChatListView> {
 
   void _initData() {
     final lschat = List.generate(100, (index) {
-      return UseInfo.from({
+      return UserInfo.from({
         'imageUrl': 'https://cdn.chanhtuoi.com/uploads/2022/01/hinh-avatar-nam-deo-kinh.jpg',
         'name': 'name$index',
         'isOnline': true,

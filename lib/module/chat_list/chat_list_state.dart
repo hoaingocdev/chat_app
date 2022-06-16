@@ -46,7 +46,7 @@ class _ChatListViewState extends TTState<_ChatListModel, _ChatListView> {
   }
 
   Widget buildChatItem({
-    required UseInfo useInfo,
+    required UserInfo useInfo,
     VoidCallback? onPressed,
   }) {
     return InkWell(
