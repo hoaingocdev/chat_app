@@ -2,9 +2,7 @@ library chat_list;
 
 import 'package:chat_app/model/model.dart';
 import 'package:chat_app/module/module.dart';
-import 'package:chat_app/res/color.p.dart';
 import 'package:chat_app/res/res.dart';
-import 'package:chat_app/res/style.p.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:chat_app/widget/widget.dart';

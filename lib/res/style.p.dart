@@ -44,4 +44,9 @@ class St {
     fontFamily: Font.proximaNova,
     fontSize: 17,
   );
+  static const body13300 = TextStyle(
+    fontWeight: FontWeight.w300,
+    fontFamily: Font.proximaNova,
+    fontSize: 13,
+  );
 }
