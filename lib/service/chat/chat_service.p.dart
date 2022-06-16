@@ -8,11 +8,13 @@ ChatService get chatSrv => ChatService.shared();
 class ChatService extends ChangeNotifier {
   static ChatService? _sInstance;
 
-  final messages = [];
   final users = <UserInfo>[];
+  final messages = <MessageInfo>[];
 
   ChatService._() {
-    _init();
+    clear();
+    _initUsers();
+    _initMessages();
   }
 
   factory ChatService.shared() {
@@ -24,7 +26,7 @@ class ChatService extends ChangeNotifier {
     users.clear();
   }
 
-  Future<List<UserInfo>> _init() async {
+  void _initUsers() {
     users.addAll(List.generate(30, (index) {
       return UserInfo.from({
         'name': 'User Name ${index + 1}',
@@ -34,6 +36,35 @@ class ChatService extends ChangeNotifier {
         'lastMsg': 'Message => loprem isump $index ... :))) Message => loprem isump $index ... :))) Message =>',
       });
     }));
-    return users;
+  }
+
+  void _initMessages() {
+    final textLs = List.generate(10, (index) {
+      return MessageInfo(
+        content: 'This is the text',
+        date: DateTime.now(),
+        type: MessageType.text,
+        status: MessageStatus.values[index % 2],
+      );
+    });
+    final imageLs = List.generate(10, (index) {
+      return MessageInfo(
+        date: DateTime.now(),
+        type: MessageType.image,
+        status: MessageStatus.values[index % 2],
+        images: List.generate(10, (index) {
+          return ImageUtils.random(
+            width: 100.0 * Random.secure().nextInt(10),
+            height: 1080 * Random.secure().nextDouble(),
+          );
+        }),
+      );
+    });
+    for (var i = 0; i < 10; i++) {
+      messages.add(textLs[i]);
+      messages.add(imageLs[i]);
+    }
+    print(messages);
+    notifyListeners();
   }
 }
