@@ -8,6 +8,8 @@ class UserInfo extends ChangeNotifier {
   bool get isOnline => _data['isOnline'] ?? false;
   int get unreadMsgCount => _data['unreadMsgCount'] ?? 0;
 
+  String get unreadDisplay => unreadMsgCount > 9 ? '9+' : unreadMsgCount.toString();
+
   UserInfo.from(Map e) {
     _data.addAll(e);
   }

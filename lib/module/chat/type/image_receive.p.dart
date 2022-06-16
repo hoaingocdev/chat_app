@@ -30,6 +30,7 @@ class ImageReceive extends StatelessWidget {
       children: [
         Expanded(
           child: GridView.builder(
+            physics: const NeverScrollableScrollPhysics(),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 3,
               mainAxisSpacing: 5,

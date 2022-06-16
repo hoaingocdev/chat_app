@@ -31,14 +31,19 @@ class _ChatListViewState extends TTState<_ChatListModel, _ChatListView> {
           ),
         ],
       ),
-      body: ListView.separated(
-        separatorBuilder: (_, i) => const SizedBox(height: 23),
-        itemCount: 100,
-        padding: const EdgeInsets.symmetric(vertical: 22),
-        itemBuilder: (_, i) {
-          return buildChatItem(
-            useInfo: model.chats[i],
-            onPressed: model.onOpenChatPressed,
+      body: Consum<ChatService>(
+        value: chatSrv,
+        builder: (context, srv) {
+          return ListView.separated(
+            separatorBuilder: (_, i) => const SizedBox(height: 23),
+            itemCount: 100,
+            padding: const EdgeInsets.symmetric(vertical: 22),
+            itemBuilder: (_, i) {
+              return buildChatItem(
+                useInfo: srv.users[i],
+                onPressed: model.onOpenChatPressed,
+              );
+            },
           );
         },
       ),
@@ -97,33 +102,42 @@ class _ChatListViewState extends TTState<_ChatListModel, _ChatListView> {
                         ),
                       ),
                       Container(
-                        height: 17,
-                        width: 17,
+                        height: 20,
+                        width: 20,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(9),
+                          borderRadius: BorderRadius.circular(10),
                           color: Cl.color6274E6,
                         ),
-                        child: Center(
-                          child: Text(
-                            '1',
-                            style: St.body12300.copyWith(color: Cl.colorFFFFFF),
+                        child: Flexible(
+                          child: Center(
+                            child: Text(
+                              useInfo.unreadDisplay,
+                              style: St.body12300.copyWith(color: Cl.colorFFFFFF),
+                              textAlign: TextAlign.center,
+                            ),
                           ),
                         ),
                       )
                     ],
                   ),
-                  Row(
-                    children: [
-                      Text(
-                        'Shall we meet today?',
-                        style: St.body15400.copyWith(color: Cl.color979797),
-                      ),
-                      const Spacer(),
-                      Text(
-                        '5 : 45 PM',
-                        style: St.body12300.copyWith(color: Cl.color707070),
-                      ),
-                    ],
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Flexible(
+                          child: Text(
+                            useInfo.lastMsg,
+                            style: St.body15400.copyWith(color: Cl.color979797),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ),
+                        ),
+                        const Spacer(),
+                        Text(
+                          '5 : 45 PM',
+                          style: St.body12300.copyWith(color: Cl.color707070),
+                        ),
+                      ],
+                    ),
                   )
                 ],
               ),

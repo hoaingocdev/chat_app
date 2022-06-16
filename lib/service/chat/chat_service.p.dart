@@ -30,7 +30,7 @@ class ChatService extends ChangeNotifier {
         'name': 'User Name ${index + 1}',
         'imageUrl': ImageUtils.random(),
         'isOnline': index % 3 == 0,
-        'unreadMsgCount': Random.secure().nextInt(100),
+        'unreadMsgCount': Random.secure().nextInt(15),
         'lastMsg': 'Message => loprem isump $index ... :)))',
       });
     }));

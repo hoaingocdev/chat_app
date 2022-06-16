@@ -17,27 +17,33 @@ class _ChatViewState extends TTState<_ChatModel, _ChatView> {
       body: Column(
         children: [
           Expanded(
-            child: Column(
-              children: const [
-                SizedBox(height: 28),
-                MessegerReceive(),
-                SizedBox(height: 28),
-                // MessegerSentWidget(),
-                ImageReceive(
-                  images: [
-                    'https://via.placeholder.com/1920x1080',
-                    // 'https://via.placeholder.com/1920x1080',
-                    // 'https://via.placeholder.com/1920x1080',
-                    // 'https://via.placeholder.com/1920x1080',
-                    // 'https://via.placeholder.com/1920x1080',
-                    // 'https://via.placeholder.com/1920x1080',
-                    // 'https://via.placeholder.com/1920x1080',
-                    // 'https://via.placeholder.com/1920x1080',
-                    'https://via.placeholder.com/1080x1920',
-                    // 'https://via.placeholder.com/1080x1920',
-                  ],
-                )
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                children: const [
+                  SizedBox(height: 28),
+                  MessegerReceive(),
+                  MessegerReceive(),
+                  MessegerReceive(),
+                  SizedBox(height: 28),
+                  MessegerSentWidget(),
+                  MessegerSentWidget(),
+                  MessegerSentWidget(),
+                  ImageReceive(
+                    images: [
+                      'https://via.placeholder.com/1920x1080',
+                      'https://via.placeholder.com/1920x1080',
+                      'https://via.placeholder.com/1920x1080',
+                      'https://via.placeholder.com/1920x1080',
+                      'https://via.placeholder.com/1920x1080',
+                      'https://via.placeholder.com/1920x1080',
+                      'https://via.placeholder.com/1920x1080',
+                      'https://via.placeholder.com/1920x1080',
+                      'https://via.placeholder.com/1080x1920',
+                      'https://via.placeholder.com/1080x1920',
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
           buildBottomAction(
