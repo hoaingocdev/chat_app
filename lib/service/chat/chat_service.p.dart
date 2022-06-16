@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:chat_app/model/model.dart';
 import 'package:chat_app/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +30,8 @@ class ChatService extends ChangeNotifier {
         'name': 'User Name ${index + 1}',
         'imageUrl': ImageUtils.random(),
         'isOnline': index % 3 == 0,
+        'unreadMsgCount': Random.secure().nextInt(100),
+        'lastMsg': 'Message => loprem isump $index ... :)))',
       });
     }));
     return users;
