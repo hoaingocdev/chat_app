@@ -1,13 +1,17 @@
 part of chat;
 
 class ImageReceive extends StatelessWidget {
-  final List<String> images;
+  final MessageInfo messageInfo;
 
-  const ImageReceive({Key? key, required this.images}) : super(key: key);
+  const ImageReceive({Key? key, required this.messageInfo}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    if (messageInfo.images == null) {
+      return const SizedBox();
+    }
     final model = context.watch<_ChatModel>();
+    final images = messageInfo.images!;
 
     return Padding(
       padding: const EdgeInsets.only(left: 18, right: 20),
@@ -17,15 +21,18 @@ class ImageReceive extends StatelessWidget {
             return const SizedBox();
           case 1:
             return buildSingleImage(
+              images: images,
               onPressed: () => model.onPhotoItemPressed(images),
             );
 
           case 2:
             return buildDoubleImage(
+              images: images,
               onPressed: (i) => model.onPhotoItemPressed(images, index: i),
             );
           default:
             return buildGridImage(
+              images: images,
               onPressed: (i) => model.onPhotoItemPressed(images, index: i),
             );
         }
@@ -33,7 +40,10 @@ class ImageReceive extends StatelessWidget {
     );
   }
 
-  Widget buildGridImage({ValueChanged<int>? onPressed}) {
+  Widget buildGridImage({
+    ValueChanged<int>? onPressed,
+    required List<String> images,
+  }) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
@@ -63,7 +73,10 @@ class ImageReceive extends StatelessWidget {
     );
   }
 
-  Widget buildDoubleImage({ValueChanged<int>? onPressed}) {
+  Widget buildDoubleImage({
+    ValueChanged<int>? onPressed,
+    required List<String> images,
+  }) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
@@ -99,7 +112,10 @@ class ImageReceive extends StatelessWidget {
     );
   }
 
-  Widget buildSingleImage({VoidCallback? onPressed}) {
+  Widget buildSingleImage({
+    VoidCallback? onPressed,
+    required List<String> images,
+  }) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [

@@ -1,7 +1,8 @@
 part of chat;
 
 class MessageSent extends StatelessWidget {
-  const MessageSent({Key? key}) : super(key: key);
+  final MessageInfo messageInfo;
+  const MessageSent({Key? key, required this.messageInfo}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,7 @@ class MessageSent extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text(
-            '10 : 35 AM',
+            DateTimeUtils.format(messageInfo.date),
             style: St.body13300.copyWith(color: Cl.color9D9D9D),
           ),
           const SizedBox(width: 6),
@@ -24,16 +25,14 @@ class MessageSent extends StatelessWidget {
           Flexible(
             child: Container(
               padding: const EdgeInsets.fromLTRB(9, 7, 9, 5),
-              // height: 56,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
                 color: Cl.color7686E9,
               ),
               child: Text(
-                '.',
+                messageInfo.content ?? '-',
                 maxLines: 10,
                 overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.center,
                 style: St.body16400.copyWith(
                   color: Cl.colorFFFFFF,
                   height: 21 / 16,

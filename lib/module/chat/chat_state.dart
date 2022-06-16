@@ -17,48 +17,7 @@ class _ChatViewState extends TTState<_ChatModel, _ChatView> {
       body: Column(
         children: [
           Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: const [
-                  SizedBox(height: 28),
-                  MessageReceive(),
-                  MessageReceive(),
-                  MessageReceive(),
-                  SizedBox(height: 28),
-                  MessageSent(),
-                  MessageSent(),
-                  MessageSent(),
-                  ImageReceive(
-                    images: [
-                      'https://via.placeholder.com/1920x1080',
-                      // 'https://via.placeholder.com/1920x1080',
-                      // 'https://via.placeholder.com/1920x1080',
-                      // 'https://via.placeholder.com/1920x1080',
-                      // 'https://via.placeholder.com/1920x1080',
-                      // 'https://via.placeholder.com/1920x1080',
-                      // 'https://via.placeholder.com/1920x1080',
-                      // 'https://via.placeholder.com/1920x1080',
-                      // 'https://via.placeholder.com/1080x1920',
-                      'https://via.placeholder.com/1080x1920',
-                    ],
-                  ),
-                  // ImageSend(
-                  //   images: [
-                  //     // 'https://via.placeholder.com/1920x1080',
-                  //     // 'https://via.placeholder.com/1920x1080',
-                  //     // 'https://via.placeholder.com/1920x1080',
-                  //     // 'https://via.placeholder.com/1920x1080',
-                  //     // 'https://via.placeholder.com/1920x1080',
-                  //     // 'https://via.placeholder.com/1920x1080',
-                  //     // 'https://via.placeholder.com/1920x1080',
-                  //     // 'https://via.placeholder.com/1920x1080',
-                  //     // 'https://via.placeholder.com/1080x1920',
-                  //     'https://via.placeholder.com/1080x1920',
-                  //   ],
-                  // )
-                ],
-              ),
-            ),
+            child: buildChatContent(),
           ),
           buildBottomAction(
             onStickerPressed: model.onStickedPressed,
@@ -71,6 +30,53 @@ class _ChatViewState extends TTState<_ChatModel, _ChatView> {
         ],
       ),
     );
+  }
+
+  Widget buildChatContent() {
+    return Consum<ChatService>(
+      value: chatSrv,
+      builder: (context, srv) {
+        return ListView.separated(
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          separatorBuilder: (_, i) => const SizedBox(height: 16),
+          itemCount: srv.messages.length,
+          itemBuilder: (_, i) {
+            final msg = srv.messages[i];
+
+            switch (msg.status) {
+              case MessageStatus.send:
+                return buildSend(msg);
+              case MessageStatus.receive:
+                return buildReceive(msg);
+            }
+          },
+        );
+      },
+    );
+  }
+
+  Widget buildSend(MessageInfo msg) {
+    switch (msg.type) {
+      case MessageType.text:
+        return MessageSent(messageInfo: msg);
+      case MessageType.image:
+        return const ImageSend(images: []);
+      case MessageType.sticker:
+        return const SizedBox();
+    }
+  }
+
+  Widget buildReceive(MessageInfo msg) {
+    switch (msg.type) {
+      case MessageType.text:
+        return MessageReceive(
+          messageInfo: msg,
+        );
+      case MessageType.image:
+        return ImageReceive(messageInfo: msg);
+      case MessageType.sticker:
+        return const SizedBox();
+    }
   }
 
   Widget buildBottomAction({

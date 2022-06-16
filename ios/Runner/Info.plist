@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Chat App want to use microphone to record video</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Chat App want to use camera to take a picture and send a message</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Chat App want to use photo to send message</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
