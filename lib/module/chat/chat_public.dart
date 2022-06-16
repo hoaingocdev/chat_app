@@ -1,5 +1,6 @@
 library chat;
 
+import 'package:chat_app/module/module.dart';
 import 'package:chat_app/res/res.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
