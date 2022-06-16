@@ -60,7 +60,7 @@ class _ChatViewState extends TTState<_ChatModel, _ChatView> {
       case MessageType.text:
         return MessageSent(messageInfo: msg);
       case MessageType.image:
-        return const ImageSend(images: []);
+        return ImageSend(messageInfo: msg);
       case MessageType.sticker:
         return const SizedBox();
     }
@@ -149,12 +149,10 @@ class _ChatViewState extends TTState<_ChatModel, _ChatView> {
         SizedBox(
           height: 36,
           width: 36,
-          child: ClipRRect(
+          child: ImageNetwork(
+            imageUrl: 'https://cdn.chanhtuoi.com/uploads/2022/01/hinh-avatar-nam-deo-kinh.jpg',
+            fit: BoxFit.cover,
             borderRadius: BorderRadius.circular(18),
-            child: Image.network(
-              'https://cdn.chanhtuoi.com/uploads/2022/01/hinh-avatar-nam-deo-kinh.jpg',
-              fit: BoxFit.cover,
-            ),
           ),
         ),
         const SizedBox(width: 7),

@@ -16,13 +16,10 @@ class ImageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onPressed,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(5),
-        child: Image.network(
-          imageUrl,
-          fit: BoxFit.cover,
-          height: height,
-        ),
+      child: ImageNetwork(
+        imageUrl: imageUrl,
+        height: height,
+        fit: BoxFit.cover,
       ),
     );
   }

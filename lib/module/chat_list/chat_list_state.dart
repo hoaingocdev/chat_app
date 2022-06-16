@@ -19,12 +19,10 @@ class _ChatListViewState extends TTState<_ChatListModel, _ChatListView> {
               child: SizedBox(
                 height: 26,
                 width: 26,
-                child: ClipRRect(
+                child: ImageNetwork(
+                  imageUrl: 'https://st.quantrimang.com/photos/image/2021/09/23/AVT-Chibi-10.jpg',
                   borderRadius: BorderRadius.circular(13),
-                  child: Image.network(
-                    'https://st.quantrimang.com/photos/image/2021/09/23/AVT-Chibi-10.jpg',
-                    fit: BoxFit.cover,
-                  ),
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
@@ -67,12 +65,10 @@ class _ChatListViewState extends TTState<_ChatListModel, _ChatListView> {
                 SizedBox(
                   height: 60,
                   width: 60,
-                  child: ClipRRect(
+                  child: ImageNetwork(
+                    imageUrl: useInfo.imageUrl,
                     borderRadius: BorderRadius.circular(30),
-                    child: Image.network(
-                      useInfo.imageUrl,
-                      fit: BoxFit.cover,
-                    ),
+                    fit: BoxFit.cover,
                   ),
                 ),
                 useInfo.isOnline

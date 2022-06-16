@@ -1,29 +1,37 @@
 part of chat;
 
 class ImageSend extends StatelessWidget {
-  final List<String> images;
-  const ImageSend({Key? key, required this.images}) : super(key: key);
+  final MessageInfo messageInfo;
+
+  const ImageSend({Key? key, required this.messageInfo}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    if (messageInfo == null) {
+      return SizedBox();
+    }
     final model = context.watch<_ChatModel>();
+    final images = messageInfo.images!;
 
     return Padding(
       padding: const EdgeInsets.only(left: 18, right: 20),
       child: () {
-        switch (images.length) {
+        switch (messageInfo.images!.length) {
           case 0:
             return const SizedBox();
           case 1:
             return buildSingleImage(
+              images: images,
               onPressed: () => model.onPhotoItemPressed(images),
             );
           case 2:
             return buildDoubleImage(
+              images: images,
               onPressed: (i) => model.onPhotoItemPressed(images, index: i),
             );
           default:
             return buildGridImage(
+              images: images,
               onPressed: (i) => model.onPhotoItemPressed(images, index: i),
             );
         }
@@ -33,12 +41,13 @@ class ImageSend extends StatelessWidget {
 
   Widget buildGridImage({
     ValueChanged<int>? onPressed,
+    required List<String> images,
   }) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        const SendTime(
-          text: '10 : 32 AM',
+        SendTime(
+          text: DateTimeUtils.format(messageInfo.date),
         ),
         const SizedBox(width: 6),
         Image.asset(Id.ic_seen),
@@ -66,7 +75,10 @@ class ImageSend extends StatelessWidget {
     );
   }
 
-  Widget buildDoubleImage({ValueChanged<int>? onPressed}) {
+  Widget buildDoubleImage({
+    ValueChanged<int>? onPressed,
+    required List<String> images,
+  }) {
     return Row(
       children: [
         Expanded(
@@ -75,8 +87,10 @@ class ImageSend extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                const SendTime(
-                  text: '10 : 32 AM',
+                SendTime(
+                  text: DateTimeUtils.format(
+                    messageInfo.date,
+                  ),
                 ),
                 const SizedBox(width: 6),
                 Image.asset(Id.ic_seen),
@@ -104,12 +118,15 @@ class ImageSend extends StatelessWidget {
     );
   }
 
-  Widget buildSingleImage({VoidCallback? onPressed}) {
+  Widget buildSingleImage({
+    VoidCallback? onPressed,
+    required List<String> images,
+  }) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        const SendTime(
-          text: '10 : 32 AM',
+        SendTime(
+          text: DateTimeUtils.format(messageInfo.date),
         ),
         const SizedBox(width: 6),
         Image.asset(Id.ic_seen),
