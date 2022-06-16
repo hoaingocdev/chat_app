@@ -61,10 +61,10 @@ class ChatService extends ChangeNotifier {
       date: DateTime.now(),
       status: MessageStatus.send,
       type: MessageType.image,
-      images: List.generate(10, (index) {
+      images: List.generate(Random.secure().nextInt(10), (index) {
         return ImageUtils.random(
-          width: 100.0 * Random.secure().nextInt(10),
-          height: 1080 * Random.secure().nextDouble(),
+          width: 500 * Random.secure().nextInt(10),
+          height: 100 * Random.secure().nextInt(20),
         );
       }),
     );
@@ -77,10 +77,10 @@ class ChatService extends ChangeNotifier {
       date: DateTime.now(),
       status: MessageStatus.receive,
       type: MessageType.image,
-      images: List.generate(10, (index) {
+      images: List.generate(Random.secure().nextInt(10), (index) {
         return ImageUtils.random(
-          width: 100.0 * Random.secure().nextInt(10),
-          height: 1080 * Random.secure().nextDouble(),
+          width: 500 * Random.secure().nextInt(10),
+          height: 100 * Random.secure().nextInt(20),
         );
       }),
     );
@@ -136,10 +136,10 @@ class ChatService extends ChangeNotifier {
         date: DateTime.now(),
         type: MessageType.image,
         status: MessageStatus.values[index % 2],
-        images: List.generate(10, (index) {
+        images: List.generate(Random.secure().nextInt(10), (index) {
           return ImageUtils.random(
-            width: 100.0 * Random.secure().nextInt(10),
-            height: 1080 * Random.secure().nextDouble(),
+            width: 500 * Random.secure().nextInt(10),
+            height: 100 * Random.secure().nextInt(20),
           );
         }),
       );
