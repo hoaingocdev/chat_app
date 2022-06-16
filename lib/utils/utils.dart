@@ -3,3 +3,4 @@
 ///---------------------------------------------------------------
 
 export './image_utils.p.dart';
+export './string_utils.p.dart';
