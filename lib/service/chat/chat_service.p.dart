@@ -5,11 +5,15 @@ import 'package:flutter/material.dart';
 
 ChatService get chatSrv => ChatService.shared();
 
+enum NetworkState { idle, typing, done }
+
 class ChatService extends ChangeNotifier {
   static ChatService? _sInstance;
 
   final users = <UserInfo>[];
   final messages = <MessageInfo>[];
+
+  final networkState = ValueNotifier(NetworkState.idle);
 
   ChatService._() {
     clear();
@@ -26,6 +30,81 @@ class ChatService extends ChangeNotifier {
     users.clear();
   }
 
+  Future sendMsg(String msg) async {
+    networkState.value = NetworkState.idle;
+    await _send(msg);
+
+    networkState.value = NetworkState.typing;
+    await Future.delayed(const Duration(seconds: 1));
+
+    await _receiveMsg();
+    networkState.value = NetworkState.done;
+  }
+
+  Future sendImg(String path) async {
+    try {
+      networkState.value = NetworkState.idle;
+      await _sendImg(path);
+
+      networkState.value = NetworkState.typing;
+      await Future.delayed(const Duration(seconds: 1));
+
+      await _receiveImg();
+      networkState.value = NetworkState.done;
+    } catch (e) {
+      return;
+    }
+  }
+
+  Future _sendImg(String path) async {
+    final msg = MessageInfo(
+      date: DateTime.now(),
+      imagePath: path,
+      status: MessageStatus.send,
+      type: MessageType.image,
+    );
+    messages.add(msg);
+    return notifyListeners();
+  }
+
+  Future _receiveImg() async {
+    final msg = MessageInfo(
+      date: DateTime.now(),
+      status: MessageStatus.receive,
+      type: MessageType.image,
+      images: List.generate(10, (index) {
+        return ImageUtils.random(
+          width: 100.0 * Random.secure().nextInt(10),
+          height: 1080 * Random.secure().nextDouble(),
+        );
+      }),
+    );
+    messages.add(msg);
+    return notifyListeners();
+  }
+
+  Future _send(String msg) async {
+    final messageInfo = MessageInfo(
+      date: DateTime.now(),
+      content: msg,
+      status: MessageStatus.send,
+      type: MessageType.text,
+    );
+    messages.add(messageInfo);
+    return notifyListeners();
+  }
+
+  Future _receiveMsg() async {
+    final msg = MessageInfo(
+      date: DateTime.now(),
+      content: StringUtils.generateRandomString(200),
+      status: MessageStatus.receive,
+      type: MessageType.text,
+    );
+    messages.add(msg);
+    return notifyListeners();
+  }
+
   void _initUsers() {
     users.addAll(List.generate(30, (index) {
       return UserInfo.from({
@@ -33,7 +112,7 @@ class ChatService extends ChangeNotifier {
         'imageUrl': ImageUtils.random(),
         'isOnline': index % 3 == 0,
         'unreadMsgCount': Random.secure().nextInt(15),
-        'lastMsg': 'Message => loprem isump $index ... :))) Message => loprem isump $index ... :))) Message =>',
+        'lastMsg': '$index' + StringUtils.generateRandomString(100),
       });
     }));
   }
@@ -41,7 +120,7 @@ class ChatService extends ChangeNotifier {
   void _initMessages() {
     final textLs = List.generate(10, (index) {
       return MessageInfo(
-        content: 'This is the text',
+        content: '$index' + StringUtils.generateRandomString(100),
         date: DateTime.now(),
         type: MessageType.text,
         status: MessageStatus.values[index % 2],
