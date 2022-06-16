@@ -108,13 +108,11 @@ class _ChatListViewState extends TTState<_ChatListModel, _ChatListView> {
                           borderRadius: BorderRadius.circular(10),
                           color: Cl.color6274E6,
                         ),
-                        child: Flexible(
-                          child: Center(
-                            child: Text(
-                              useInfo.unreadDisplay,
-                              style: St.body12300.copyWith(color: Cl.colorFFFFFF),
-                              textAlign: TextAlign.center,
-                            ),
+                        child: Center(
+                          child: Text(
+                            useInfo.unreadDisplay,
+                            style: St.body12300.copyWith(color: Cl.colorFFFFFF),
+                            textAlign: TextAlign.center,
                           ),
                         ),
                       )
@@ -131,7 +129,6 @@ class _ChatListViewState extends TTState<_ChatListModel, _ChatListView> {
                             maxLines: 1,
                           ),
                         ),
-                        const Spacer(),
                         Text(
                           '5 : 45 PM',
                           style: St.body12300.copyWith(color: Cl.color707070),
