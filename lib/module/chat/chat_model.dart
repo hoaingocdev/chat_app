@@ -1,6 +1,26 @@
 part of chat;
 
 class _ChatModel extends TTChangeNotifier<_ChatView> {
+  final TextEditingController controller;
+  final ScrollController scrollController;
+  bool enable = false;
+
+  _ChatModel()
+      : controller = TextEditingController(),
+        scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    controller.dispose();
+    super.dispose();
+  }
+
+  void validate() {
+    enable = controller.text.isNotEmpty;
+    notifyListeners();
+  }
+
   void onBackPressed() {
     Navigator.of(context!).pop();
   }
@@ -9,7 +29,12 @@ class _ChatModel extends TTChangeNotifier<_ChatView> {
 
   void onPlusPressed() {}
 
-  void onSendPressed() {}
+  void onSendPressed() async {
+    chatSrv.sendMsg(controller.text);
+    await Future.delayed(const Duration(seconds: 2));
+    scrollController.jumpTo(scrollController.position.maxScrollExtent);
+    controller.clear();
+  }
 
   void onPhotoItemPressed(List<String> images, {int index = 0}) {
     Navigator.of(context!).push(
