@@ -3,14 +3,38 @@ part of chat;
 class _ChatModel extends TTChangeNotifier<_ChatView> {
   final TextEditingController controller;
   final ScrollController scrollController;
+  final ImagePicker _picker = ImagePicker();
+
   bool enable = false;
 
   _ChatModel()
       : controller = TextEditingController(),
-        scrollController = ScrollController();
+        scrollController = ScrollController() {
+    chatSrv.addListener(scrollListener);
+  }
+
+  @override
+  void onReady() async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    scrollController.jumpTo(scrollController.position.maxScrollExtent);
+    super.onReady();
+  }
+
+  void scrollListener() {
+    Future.delayed(const Duration(milliseconds: 200)).then((_) {
+      if (scrollController.positions.isNotEmpty) {
+        scrollController.animateTo(
+          scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.fastLinearToSlowEaseIn,
+        );
+      }
+    });
+  }
 
   @override
   void dispose() {
+    scrollController.removeListener(scrollListener);
     scrollController.dispose();
     controller.dispose();
     super.dispose();
@@ -27,12 +51,23 @@ class _ChatModel extends TTChangeNotifier<_ChatView> {
 
   void onStickedPressed() {}
 
-  void onPlusPressed() {}
+  void onPlusPressed() async {
+    final List<XFile>? images = await _picker.pickMultiImage();
+    if (images == null || images.isEmpty) {
+      return;
+    }
+
+    final List<String> imgs = [];
+    for (var item in images) {
+      imgs.add(item.path);
+    }
+    // final ls = images.map((e) => e.path).toList();
+
+    chatSrv.sendImg(imgs);
+  }
 
   void onSendPressed() async {
     chatSrv.sendMsg(controller.text);
-    await Future.delayed(const Duration(seconds: 2));
-    scrollController.jumpTo(scrollController.position.maxScrollExtent);
     controller.clear();
   }
 
@@ -42,31 +77,6 @@ class _ChatModel extends TTChangeNotifier<_ChatView> {
         fullscreenDialog: true,
         builder: (context) => createPhotoView(images: images, initPage: index),
       ),
-      // PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) {
-      //     return createPhotoView(
-      //       images: images,
-      //       initPage: index,
-      //     );
-      //   },
-      //   transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      //     const begin = Offset(0.0, 1.0);
-      //     const end = Offset.zero;
-      //     final tween = Tween(begin: begin, end: end);
-      //     final offsetAnimation = animation.drive(tween);
-
-      //     return SlideTransition(
-      //       position: offsetAnimation,
-      //       child: child,
-      //     );
-      //   },
-      // ),
     );
-    //   MaterialPageRoute(
-    //     builder: (_) {
-    //       return createPhotoView(images: images, initPage: index);
-    //     },
-    //   ),
-    // );
   }
 }

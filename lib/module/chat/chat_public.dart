@@ -2,11 +2,14 @@ library chat;
 
 import 'package:chat_app/model/model.dart';
 import 'package:chat_app/module/module.dart';
+import 'package:chat_app/res/jons.p.dart';
 import 'package:chat_app/res/res.dart';
 import 'package:chat_app/service/chat/chat_service.p.dart';
 import 'package:chat_app/utils/datetime_utils.p.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:chat_app/widget/widget.dart';
 

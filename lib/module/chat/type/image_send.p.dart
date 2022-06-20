@@ -7,9 +7,6 @@ class ImageSend extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (messageInfo == null) {
-      return SizedBox();
-    }
     final model = context.watch<_ChatModel>();
     final images = messageInfo.images!;
 

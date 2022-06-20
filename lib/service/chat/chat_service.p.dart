@@ -35,7 +35,7 @@ class ChatService extends ChangeNotifier {
     await _send(msg);
 
     networkState.value = NetworkState.typing;
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 10));
 
     await _receiveMsg();
     networkState.value = NetworkState.done;
@@ -61,7 +61,7 @@ class ChatService extends ChangeNotifier {
       date: DateTime.now(),
       status: MessageStatus.send,
       type: MessageType.image,
-      images: List.generate(Random.secure().nextInt(10), (index) {
+      images: List.generate(images.length, (index) {
         return ImageUtils.random(
           width: 500 * Random.secure().nextInt(10),
           height: 100 * Random.secure().nextInt(20),

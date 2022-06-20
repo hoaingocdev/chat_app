@@ -56,7 +56,7 @@ class BottomAction extends StatelessWidget {
             const SizedBox(width: 15),
             MaterialButton(
               minWidth: 15,
-              onPressed: onStickerPressed,
+              onPressed: onPlusPressed,
               child: Image.asset(Id.ic_plus),
             ),
             if (model.enable) // const SizedBox(width: 8),

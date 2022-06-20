@@ -3,30 +3,33 @@ part of chat;
 class _ChatViewState extends TTState<_ChatModel, _ChatView> {
   @override
   Widget buildWithModel(BuildContext context, _ChatModel model) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Cl.colorFFFFFF,
-        centerTitle: false,
-        leading: const SizedBox(),
-        leadingWidth: 0,
-        title: buildTitle(
-          onPressed: model.onBackPressed,
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Cl.colorFFFFFF,
+          centerTitle: false,
+          leading: const SizedBox(),
+          leadingWidth: 0,
+          title: buildTitle(
+            onPressed: model.onBackPressed,
+          ),
         ),
-      ),
-      body: Column(
-        children: [
-          const Expanded(
-            child: ChatContent(),
-          ),
-          BottomAction(
-            onStickerPressed: model.onStickedPressed,
-            onPlusPressed: model.onPlusPressed,
-            onSendPressed: model.enable ? model.onSendPressed : null,
-          ),
-          SizedBox(
-            height: 5 + MediaQuery.of(context).padding.bottom,
-          ),
-        ],
+        body: Column(
+          children: [
+            const Expanded(
+              child: ChatContent(),
+            ),
+            BottomAction(
+              onStickerPressed: model.onStickedPressed,
+              onPlusPressed: model.onPlusPressed,
+              onSendPressed: model.enable ? model.onSendPressed : null,
+            ),
+            SizedBox(
+              height: 5 + MediaQuery.of(context).padding.bottom,
+            ),
+          ],
+        ),
       ),
     );
   }
