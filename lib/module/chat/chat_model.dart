@@ -3,9 +3,11 @@ part of chat;
 class _ChatModel extends TTChangeNotifier<_ChatView> {
   final TextEditingController controller;
   final ScrollController scrollController;
+
   final ImagePicker _picker = ImagePicker();
 
   bool enable = false;
+  bool emojiShowing = false;
 
   _ChatModel()
       : controller = TextEditingController(),
