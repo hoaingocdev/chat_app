@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:chat_app/model/model.dart';
+import 'package:chat_app/service/service.dart';
 import 'package:chat_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -35,9 +36,9 @@ class ChatService extends ChangeNotifier {
     await _send(msg);
 
     networkState.value = NetworkState.typing;
-    await Future.delayed(const Duration(seconds: 10));
+    await Future.delayed(const Duration(seconds: 3));
 
-    await _receiveMsg();
+    await _receiveMsg(msg);
     networkState.value = NetworkState.done;
   }
 
@@ -47,7 +48,7 @@ class ChatService extends ChangeNotifier {
       await _sendImg(images);
 
       networkState.value = NetworkState.typing;
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 3));
 
       await _receiveImg();
       networkState.value = NetworkState.done;
@@ -99,10 +100,11 @@ class ChatService extends ChangeNotifier {
     return notifyListeners();
   }
 
-  Future _receiveMsg() async {
+  Future _receiveMsg(String sentMsg) async {
+    final receiveMsg = await platformSrv.receiveMessage(sentMsg);
     final msg = MessageInfo(
       date: DateTime.now(),
-      content: StringUtils.generateRandomString(200),
+      content: receiveMsg,
       status: MessageStatus.receive,
       type: MessageType.text,
     );

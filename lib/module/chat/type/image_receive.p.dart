@@ -120,10 +120,11 @@ class ImageReceive extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Flexible(
-            child: ImageWidget(
-          imageUrl: images.first,
-          onPressed: onPressed,
-        )),
+          child: ImageWidget(
+            imageUrl: images.first,
+            onPressed: onPressed,
+          ),
+        ),
         const SizedBox(width: 10),
         const SendTime(
           text: '10 : 32 AM',

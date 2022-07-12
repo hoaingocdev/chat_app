@@ -16,26 +16,29 @@ class BottomAction extends StatelessWidget {
     final model = context.watch<_ChatModel>();
 
     return Container(
-      height: 49,
       color: Cl.colorF6F7F8,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 11),
         child: Row(
           children: [
             MaterialButton(
-                minWidth: 20,
-                onPressed: onStickerPressed,
-                child: Image.asset(
-                  Id.ic_smile,
-                  height: 20,
-                )),
+              minWidth: 20,
+              onPressed: onStickerPressed,
+              child: Image.asset(
+                Id.ic_smile,
+                height: 20,
+              ),
+            ),
             Expanded(
               child: TextField(
+                maxLines: 5,
+                minLines: 1,
                 controller: model.controller,
                 onChanged: (v) => model.validate(),
                 cursorColor: Cl.color979797,
                 style: St.body17400.copyWith(color: Cl.color585858),
                 decoration: const InputDecoration(
+                  // isDense: true,
                   disabledBorder: OutlineInputBorder(
                     borderSide: BorderSide.none,
                   ),
@@ -56,7 +59,7 @@ class BottomAction extends StatelessWidget {
             const SizedBox(width: 15),
             MaterialButton(
               minWidth: 15,
-              onPressed: onStickerPressed,
+              onPressed: onPlusPressed,
               child: Image.asset(Id.ic_plus),
             ),
             if (model.enable) // const SizedBox(width: 8),

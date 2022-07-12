@@ -23,15 +23,17 @@ class _ChatModel extends TTChangeNotifier<_ChatView> {
   }
 
   void scrollListener() {
-    Future.delayed(const Duration(milliseconds: 200)).then((_) {
-      if (scrollController.positions.isNotEmpty) {
-        scrollController.animateTo(
-          scrollController.position.maxScrollExtent,
-          duration: const Duration(milliseconds: 500),
-          curve: Curves.fastLinearToSlowEaseIn,
-        );
-      }
-    });
+    Future.delayed(const Duration(milliseconds: 200)).then(
+      (_) {
+        if (scrollController.positions.isNotEmpty) {
+          scrollController.animateTo(
+            scrollController.position.maxScrollExtent,
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.fastLinearToSlowEaseIn,
+          );
+        }
+      },
+    );
   }
 
   @override

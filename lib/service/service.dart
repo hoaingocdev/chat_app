@@ -3,3 +3,4 @@
 ///---------------------------------------------------------------
 
 export './chat/chat_service.p.dart';
+export './platform/platform_service.p.dart';
