@@ -7,7 +7,7 @@ class _ChatModel extends TTChangeNotifier<_ChatView> {
   final ImagePicker _picker = ImagePicker();
 
   bool enable = false;
-  bool emojiShowing = false;
+  // bool emojiShowing = false;
 
   _ChatModel()
       : controller = TextEditingController(),

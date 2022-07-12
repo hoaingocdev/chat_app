@@ -19,9 +19,18 @@ class MainActivity: FlutterActivity() {
         }
     }
 
+    private fun randomAlphaNumericString(desiredStrLength: Int): String {
+        val charPool: List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
+        return (1..desiredStrLength)
+                .map{ kotlin.random.Random.nextInt(0, charPool.size) }
+                .map(charPool::get)
+                .joinToString("")
+    }
+
     private fun receiveMsg(arg: String?, result: MethodChannel.Result) {
         if (arg is String) {
-            val rs = "Reply from Android native for message: $arg"
+            val randomString = randomAlphaNumericString(100)
+            val rs = "Reply from Android native for message: \"$arg\" \n$randomString"
             result.success(rs)
         }
     }

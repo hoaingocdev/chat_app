@@ -20,7 +20,6 @@ class PlatformService extends ChangeNotifier {
       );
       return result;
     } catch (e) {
-      print(e.toString());
       return '';
     }
   }
