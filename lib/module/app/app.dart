@@ -8,6 +8,7 @@ class ChatApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: createChatList(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
