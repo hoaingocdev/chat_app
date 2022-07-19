@@ -8,7 +8,6 @@ import 'package:chat_app/service/chat/chat_service.p.dart';
 import 'package:chat_app/utils/datetime_utils.p.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
